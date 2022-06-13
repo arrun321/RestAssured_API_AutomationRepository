@@ -16,6 +16,9 @@ Then user details response should include the following
 Scenario: To make a post on Social Media
 
 Given To initiate Rest service to make a post in Socail Media
+| userId  | title            | body 						|
+| 122     | amatjango        | amatComments     |
+
 Then status code response should be "201"
 And post response should include the following
 | userId  | id | title            | body 						|
@@ -37,9 +40,12 @@ And comments response should include the following
 Scenario: To update a comment for a post in social media
 
 Given Rest service to update a comment for a post in social media
+| userId  | id | title            | body 						   |
+| 222     | 1  | amatjango new    | amatComments new   |
+
 Then status code response should be "200"
 And post response should include the following
-| userId  | id | title            | body 						|
+| userId  | id | title            | body 						   |
 | 222     | 1  | amatjango new    | amatComments new   |
 
 
@@ -48,8 +54,9 @@ Scenario: To update the title for a post in social media using Patch request
 
 
 Given Rest service to update a title for a post in social media using patch request
-| userId    | title                    | 
-| 222     | amatjango patch request  |
+| userId  | title                      | id  |
+| 222     | amatjango patch request    | 1   |
+
 Then status code response should be "200"
 And post response should include the following
 | userId  | id | title                     | body 						|

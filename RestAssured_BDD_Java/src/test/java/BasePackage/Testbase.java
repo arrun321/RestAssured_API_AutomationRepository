@@ -37,6 +37,9 @@ public class Testbase extends Utils{
 	//PATCH the comments of social media post for particular user
 	//https://jsonplaceholder.typicode.com/posts/1
 
+	//DELETE  
+	//Delete a particular post with userId 
+	//https://jsonplaceholder.typicode.com/posts/5
 	
 	Response response ;
 	
@@ -68,13 +71,13 @@ public class Testbase extends Utils{
 
 		return response;
 	}
-	public Response putRequest(String requestBody) {
+	public Response putRequest(String id,String requestBody) {
 		response = given()
 				.header("Content-type", "application/json")
 				.and()
 				.body(requestBody)
 				.when()
-				.put("/posts/1")
+				.put("/posts/"+id)
 				.then()
 				.extract().response();
 		
@@ -82,13 +85,13 @@ public class Testbase extends Utils{
 
 	}
 
-	public Response patchRequest(String requestBody) {
+	public Response patchRequest(String id,String requestBody) {
 		response = given()
 				.header("Content-type", "application/json")
 				.and()
 				.body(requestBody)
 				.when()
-				.patch("/posts/1")
+				.patch("/posts/"+id)
 				.then()
 				.extract().response();
 

@@ -42,21 +42,22 @@ public class StepDef extends Testbase {
 
 
 	@Given("^To initiate Rest service to make a post in Socail Media$")
-	public void to_initiate_Rest_service_to_post_user_details() throws Throwable {
+	public void to_initiate_Rest_service_to_post_user_details(DataTable arg1)  throws Throwable {
 
 		setupBaseUrl();
 		path = "/posts";
 
-		String requestBody = "{\n" +
-				"  \"title\": \"amatjango\",\n" +
-				"  \"body\": \"amatComments\",\n" +
-				"  \"userId\": \"122\" \n}";
+		List < List < String >> data = arg1.cells();
 
-		//	    String requestBody = "{\n" +
-		//	    		data.get(0).get(0)+ ":" +data.get(1).get(0)+","+"\n" +
-		//	    		data.get(0).get(1)+ ":" +data.get(1).get(1)+","+"\n" +
-		//	    		data.get(0).get(2)+ ":" +data.get(1).get(2)+","+"\n" +
-		//	    		data.get(0).get(3)+ ":" +data.get(1).get(3)+"\n }";
+		String requestBody = "{\n" +
+				"\""+data.get(0).get(0)+"\""+":"+"\""+data.get(1).get(0)+"\",\n" +
+				"\""+data.get(0).get(1)+"\""+":"+"\""+data.get(1).get(1)+"\",\n" +
+				"\""+data.get(0).get(2)+"\""+":"+"\""+data.get(1).get(2)+ "\" \n}";
+
+		//		String requestBody = "{\n" +
+		//				"  \"title\": \"amatjango\",\n" +
+		//				"  \"body\": \"amatComments\",\n" +
+		//				"  \"userId\": \"122\" \n}";
 
 		response=postRequestWithRequestBody(requestBody);		
 	}
@@ -67,7 +68,7 @@ public class StepDef extends Testbase {
 		validateResponseStatusCode(statusCode);
 	}
 
-		@Then("^post response should include the following$")
+	@Then("^post response should include the following$")
 	public void post_response_includes_the_following(DataTable arg1) throws Throwable {
 
 		validatepPostResponseDetails(arg1);
@@ -81,36 +82,40 @@ public class StepDef extends Testbase {
 
 		response=getRequestWithQueryParam(userId);
 	}
-	
+
 	@Then("^comments response should include the following$")
 	public void comments_response_should_include_the_following(DataTable arg1) throws Throwable {
 
 		validateCommentsResponseDetails(arg1);
 	}
-	
+
 	@Then("^user details response should include the following$")
 	public void response_includes_the_following(DataTable arg1) throws Throwable {
 
 		validateuserDetailsResponse(arg1);
 	}
 
-	
+
 	@Then("^Rest service to update a comment for a post in social media$")
-	public void rest_service_to_update_a_comment_for_a_post_social_media() throws Throwable {
+	public void rest_service_to_update_a_comment_for_a_post_social_media(DataTable arg1) throws Throwable {
 
 		setupBaseUrl();
 		path = "/posts";
 
-		String requestBody = "{\n" +
-				"  \"title\": \"amatjango new\",\n" +
-				"  \"body\": \"amatComments new\",\n" +
-				"  \"id\": \"101\",\n" +
-				"  \"userId\": \"222\" \n}";
+		List < List < String >> data = arg1.cells();
 
-		response=putRequest(requestBody);	
-		
+		String id=data.get(1).get(1);
+
+		String requestBody = "{\n" +
+				"\""+data.get(0).get(0)+"\""+":"+"\""+data.get(1).get(0)+"\",\n" +
+				"\""+data.get(0).get(1)+"\""+":"+"\""+data.get(1).get(1)+"\",\n" +
+				"\""+data.get(0).get(2)+"\""+":"+"\""+data.get(1).get(2)+"\",\n" +
+				"\""+data.get(0).get(3)+"\""+":"+"\""+data.get(1).get(3)+ "\" \n}";
+
+		response=putRequest(id,requestBody);	
+
 	}
-	
+
 	@Then("^Rest service to update a title for a post in social media using patch request$")
 	public void to_update_commet_for_a_post_using_patch_request(DataTable arg1) throws Throwable {
 
@@ -118,21 +123,20 @@ public class StepDef extends Testbase {
 		path = "/posts";
 
 		List < List < String >> data = arg1.cells();
+		String id=data.get(1).get(2);
 
 		String requestBody = "{\n" +
 				"\""+data.get(0).get(0)+"\""+":"+"\""+data.get(1).get(0)+"\",\n" +
 				"\""+data.get(0).get(1)+"\""+":"+"\""+data.get(1).get(1)+ "\" \n}";
-		
-		response=patchRequest(requestBody);	
-		
+
+		response=patchRequest(id,requestBody);	
+
 	}
-	
+
 
 	@Given("^Rest service to delete a user with id \"([^\"]*)\"$")
 	public void rest_Service_delete_user_with_id(String id) throws Throwable {
 
 		deleteRequest(id);
 	}
-
-
 }
